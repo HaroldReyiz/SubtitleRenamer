@@ -20,6 +20,8 @@ namespace SubtitleBulkRenamer
 
 			InitializeComponent();
 
+			this.ControlBox = false;
+
 			ButtonsTableLayoutPanel.ColumnCount = 0;
 			ButtonsTableLayoutPanel.ColumnStyles.Clear();
 
