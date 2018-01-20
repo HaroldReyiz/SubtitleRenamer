@@ -73,7 +73,7 @@ namespace SubtitleBulkRenamer
             // Rename the subtitles based on video file names. 
             foreach( var subtitleFile in subtitleFiles ) 
             { 
-                int       episodeNo           = subtitleFile.Key; 
+                int    episodeNo		   = subtitleFile.Key; 
                 string oldSubtitleFileName = subtitleFile.Value; 
                 string videoFilename       = videoFiles[ episodeNo ]; 
                 string newSubtitleFileName = videoFilename.Substring( 0, videoFilename.LastIndexOf( '.' ) ) +  
