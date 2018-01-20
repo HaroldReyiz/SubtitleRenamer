@@ -133,16 +133,22 @@ namespace SubtitleBulkRenamer
                 // Only subtitles are allowed. Delete other files from the List. 
                 for( int i = 0 ; i < fileNames.Count ; i++ ) 
                 { 
-                    string filenameLowercase = fileNames.ElementAt( i ).ToLower(); 
-                    if( filenameLowercase.IndexOf( ".srt" ) == -1 && filenameLowercase.IndexOf( ".sub" ) == -1 ) 
-                        fileNames.RemoveAt( i ); 
-                } 
- 
-                if( fileNames.Count <= 0 ) 
-                    MessageBox.Show( "No subtitles were selected! Please choose only subtitle (.SRT & .SUB) files.",  
-                                     "Error Encountered" ); 
-                else 
-                    RenameSubtitles( fileNames ); 
+                    string filenameLowercase = fileNames.ElementAt( i ).ToLower();
+					if( filenameLowercase.IndexOf( ".srt" ) == -1 && filenameLowercase.IndexOf( ".sub" ) == -1 )
+					{
+						fileNames.RemoveAt( i );
+					}
+                }
+
+				if( fileNames.Count <= 0 )
+				{
+					MessageBox.Show( "No subtitles were selected! Please choose only subtitle (.srt & .sub) files.",
+									 "Error Encountered" );
+				}
+				else
+				{
+					RenameSubtitles( fileNames );
+				}
             } 
         } 
  
