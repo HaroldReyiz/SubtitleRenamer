@@ -30,13 +30,15 @@ namespace SubtitleBulkRenamer
             Directory.SetCurrentDirectory( directory ); 
             List< string > videoFileNames = new List< string >( Directory.GetFiles( directory, "*.mkv" ) ); 
             if( videoFileNames.Count <= 0 ) // If the video file format is not mkv then it must be mp4. 
-                videoFileNames = new List< string >( Directory.GetFiles( directory, "*.mp4" ) ); 
-            if( videoFileNames.Count <= 0 ) // If the video file format is not mkv OR mp4 then signal error and quit. 
-            { 
-                MessageBox.Show( "No .mkv or .mp4 files found in directory!", "Error Encountered" ); 
-                Application.Exit(); 
-            } 
- 
+			{
+                videoFileNames = new List< string >( Directory.GetFiles( directory, "*.mp4" ) );
+				if( videoFileNames.Count <= 0 ) // If the video file format is not mkv OR mp4 then signal error and quit.
+				{
+					MessageBox.Show( "No .mkv or .mp4 files found in directory!", "Error Encountered" );
+					Application.Exit();
+				}
+			}
+            
             // Search through video files and sort them based on episode number. 
             Dictionary< int, string > videoFiles = new Dictionary< int, string >(); 
             foreach( string fileName in videoFileNames ) 
@@ -77,28 +79,37 @@ namespace SubtitleBulkRenamer
                 string oldSubtitleFileName = subtitleFile.Value; 
                 string videoFilename       = videoFiles[ episodeNo ]; 
                 string newSubtitleFileName = videoFilename.Substring( 0, videoFilename.LastIndexOf( '.' ) ) +  
-                                             extension; 
-                if( oldSubtitleFileName.Equals( newSubtitleFileName ) ) 
-                    notRenamedCount++; // Count the number of subtitles with already correct names. 
-                else // Rename. 
-                { 
-                    System.IO.File.Move( oldSubtitleFileName, newSubtitleFileName ); 
-                    renamedCount++; 
-                } 
+                                             extension;
+				if( oldSubtitleFileName.Equals( newSubtitleFileName ) )
+				{
+					notRenamedCount++; // Count the number of subtitles with already correct names. 
+				}
+				else // Rename. 
+				{
+					System.IO.File.Move( oldSubtitleFileName, newSubtitleFileName );
+					renamedCount++;
+				} 
             } 
  
             // If execution reached here, no errors so far. Print success message and quit. 
-            string successPrompt = ""; 
- 
-            if( renamedCount > 0 ) 
-                successPrompt += renamedCount.ToString() + 
-                                 ( renamedCount > 1 ? " files were renamed!" : " file was renamed!" ); 
-            else 
-                successPrompt += "No files were renamed!"; 
-            if( notRenamedCount > 0 ) 
-                successPrompt += "\n" + notRenamedCount.ToString() + 
-                                 ( notRenamedCount > 1 ? " files already had correct names!"  
-                                                       : " file already had the correct name!" ); 
+            string successPrompt = "";
+
+			if( renamedCount > 0 )
+			{
+				successPrompt += renamedCount.ToString() +
+								 ( renamedCount > 1 ? " files were renamed!" : " file was renamed!" );
+			}
+			else
+			{
+				successPrompt += "No files were renamed!";
+			}
+			if( notRenamedCount > 0 )
+			{
+				successPrompt += "\n" + notRenamedCount.ToString() +
+								 ( notRenamedCount > 1 ? " files already had correct names!"
+													   : " file already had the correct name!" );
+			}
+
             MessageBox.Show( successPrompt, "Renaming Finished Successfully" ); 
         } 
  
@@ -113,7 +124,6 @@ namespace SubtitleBulkRenamer
         private void OnDragDrop( object sender, DragEventArgs e ) 
         { 
             int x = this.PointToClient( new Point( e.X, e.Y ) ).X; 
- 
             int y = this.PointToClient( new Point( e.X, e.Y ) ).Y; 
  
             if( x >= DragFileLabel.Location.X && ( x <= DragFileLabel.Location.X + DragFileLabel.Width ) && 
